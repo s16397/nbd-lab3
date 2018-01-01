@@ -1,0 +1,185 @@
+[
+  {
+    "keys": [
+      "directoAndScriptWriter",
+      "movie"
+    ],
+    "length": 2,
+    "_fields": [
+      {
+        "identity": {
+          "low": 45,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Cameron Crowe",
+          "born": {
+            "low": 1957,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 37,
+          "high": 0
+        },
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "title": "Jerry Maguire",
+          "tagline": "The rest of his life begins now.",
+          "released": {
+            "low": 2000,
+            "high": 0
+          }
+        }
+      }
+    ],
+    "_fieldLookup": {
+      "directoAndScriptWriter": 0,
+      "movie": 1
+    }
+  },
+  {
+    "keys": [
+      "directoAndScriptWriter",
+      "movie"
+    ],
+    "length": 2,
+    "_fields": [
+      {
+        "identity": {
+          "low": 6,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Lana Wachowski",
+          "born": {
+            "low": 1965,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 121,
+          "high": 0
+        },
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "title": "Speed Racer",
+          "tagline": "Speed has no limits",
+          "released": {
+            "low": 2008,
+            "high": 0
+          }
+        }
+      }
+    ],
+    "_fieldLookup": {
+      "directoAndScriptWriter": 0,
+      "movie": 1
+    }
+  },
+  {
+    "keys": [
+      "directoAndScriptWriter",
+      "movie"
+    ],
+    "length": 2,
+    "_fields": [
+      {
+        "identity": {
+          "low": 5,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Lilly Wachowski",
+          "born": {
+            "low": 1967,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 121,
+          "high": 0
+        },
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "title": "Speed Racer",
+          "tagline": "Speed has no limits",
+          "released": {
+            "low": 2008,
+            "high": 0
+          }
+        }
+      }
+    ],
+    "_fieldLookup": {
+      "directoAndScriptWriter": 0,
+      "movie": 1
+    }
+  },
+  {
+    "keys": [
+      "directoAndScriptWriter",
+      "movie"
+    ],
+    "length": 2,
+    "_fields": [
+      {
+        "identity": {
+          "low": 156,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Nancy Meyers",
+          "born": {
+            "low": 1949,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 154,
+          "high": 0
+        },
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "title": "Something's Gotta Give",
+          "released": {
+            "low": 2003,
+            "high": 0
+          }
+        }
+      }
+    ],
+    "_fieldLookup": {
+      "directoAndScriptWriter": 0,
+      "movie": 1
+    }
+  }
+]

@@ -1,0 +1,142 @@
+1. 
+MATCH(hugoWeaving:Person {name: "Hugo Weaving"})-[hugoWeavingActingInMovie:ACTED_IN]->(hugoWeavingMovies) RETURN hugoWeaving,hugoWeavingActingInMovie, hugoWeavingMovies
+
+2. 
+MATCH(directorOfMovieWithHugoWeaving:Person)-[directedMovieWithHugoWeaving:DIRECTED]->(movieWithHugoWeaving:Movie)<-[:ACTED_IN]-(hugoWeaving:Person {name: "Hugo Weaving"}) RETURN directorOfMovieWithHugoWeaving,directedMovieWithHugoWeaving,movieWithHugoWeaving, hugoWeaving
+
+3. 
+MATCH(hugoWeavingMoviePartner:Person)-[:ACTED_IN]->(movieWithHugoWeaving:Movie)<-[:ACTED_IN]-(hugoWeaving:Person {name: "Hugo Weaving"}) RETURN hugoWeavingMoviePartner, movieWithHugoWeaving, hugoWeaving
+
+4.
+MATCH(actor:Person)-[:ACTED_IN]->(movie:Movie) WITH actor, count(movie) as movieCount WHERE movieCount >= 1 RETURN actor, movieCount
+
+5. 
+MATCH (director:Person)-[:DIRECTED]->(movie:Movie)<-[:WROTE]-(scriptWriter:Person) WHERE director=scriptWriter RETURN director AS directoAndScriptWriter, movie
+
+6. 
+MATCH(keanuReeves:Person {name: "Keanu Reeves"})-[:ACTED_IN]->(movieWithHugoWeavingAndKeanuReeves:Movie)<-[:ACTED_IN]-(hugoWeaving:Person {name: "Hugo Weaving"}) RETURN keanuReeves, movieWithHugoWeavingAndKeanuReeves, hugoWeaving
+
+7.  
+CREATE(captainAmerica:Movie {released: 2011, tagline: "When patriots become heroes", title:"Captain America: The First Avenger"})
+MATCH(ca:Movie) WHERE c.title="Captain America: The First Avenger"
+CREATE (jonJohnston:Person { name: "Joe Johnston", born: 1950 })-[:DIRECTED]->(ca),
+       (christopherMarkus:Person { name: "Christopher Markus" })-[:WROTE]->(ca),
+       (stephenMcFeely:Person { name:"Stephen McFeely" })-[:WROTE]->(ca),
+       (chrisEvans:Person { name: "Chris Evans", born: 1981 })-[:ACTED_IN { roles:["Captain America / Steve Rogers"] }]->(ca),
+       (samuelLJackson:Person { name: "Samuel L. Jackson", born: 1948 })-[:ACTED_IN { roles: ["Nick Fury"] }]->(ca)
+ 
+MATCH(ca:Movie) WHERE c.title="Captain America: The First Avenger"
+MATCH(hw:Person {name: "Hugo Weaving"})create (hw)-[:ACTED_IN { roles: ["Johann Schmidt / Red Skull"] }]->(ca)  
+
+MATCH(artist:Person)-[:ACTED_IN|:DIRECTED|:WROTE]->(ca:Movie {title:"Captain America: The First Avenger" }) RETURN artist, ca
+
+8.
+MATCH p=allShortestPaths((from:town { name: "Darjeeling" })-[*]->(to:peak { name: "Sandakphu" })) RETURN p
+
+9.
+MATCH(from:town { name: "Darjeeling" }),(to:peak { name: "Sandakphu" }), 
+p=allShortestPaths((from)-[*]->(to))
+RETURN p
+
+10.
+MATCH(from:town { name: "Darjeeling" }),(to:peak { name: "Sandakphu" }), 
+p=allShortestPaths((from)-[*]->(to)) WHERE ALL (e in relationships(p) WHERE exists(e.winter) AND e.winter="true") 
+RETURN p
+
+11.
+MATCH(from:town { name: "Darjeeling" }),(to:peak { name: "Sandakphu" }), 
+p=(from)-[*]->(to) 
+RETURN p AS routes, reduce(distanceSum=0, e in relationships(p) | distanceSum + e.distance ) as totalDistance ORDER BY totalDistance
+
+12.
+MATCH(from:town { name: "Darjeeling" }),
+p=((from)-[:twowheeler*]->(to)) WHERE ALL (e in relationships(p) WHERE exists(e.summer) AND e.summer="true") AND to <> from 
+RETURN p
+
+13.
+MATCH(from:town { name: "Darjeeling" }),
+p=((from)-[:twowheeler*]->(to)) WHERE ALL (e in relationships(p) WHERE exists(e.summer) AND e.summer="true") AND to <> from 
+UNWIND tail(nodes(p)) AS sublists with distinct sublists 
+RETURN collect(sublists) AS SET
+
+14.
+MATCH(airport:Airport)<-[:ORIGIN]-(flight:Flight) 
+RETURN airport, count(flight) AS originatingFligths ORDER BY originatingFligths
+
+******ADDITIONAL RELATIONSHIPS*****************************************************
+MATCH(airportA:Airport)<-[:ORIGIN]-(flight:Flight)-[:DESTINATION]->(airportB:Airport)
+MATCH(ticket:Ticket)-[:ASSIGN]->(flight)
+WITH airportA, flight, airportB, ticket
+MERGE (airportA)-[c:CONNECT { flightId: ID(flight), ticketId:ID(ticket) }]->(airportB)
+RETURN c
+***********************************************************************************
+
+15.
+MATCH p=(laxAirport:Airport {name: "LAX"})-[:CONNECT*..3]->(airport:Airport) 
+WITH p, extract(e IN relationships(p) | e.ticketId ) AS ticketIds
+MATCH(ticket:Ticket)
+WHERE id(ticket) IN ticketIds
+WITH p, reduce(total = 0, pr in extract(t in collect(ticket) | t.price) | total + pr) AS totalCost
+WHERE ALL (x IN nodes(p) WHERE size(filter(z IN nodes(p) WHERE z = x)) = 1)  AND totalCost<3000 
+WITH tail(nodes(p)) as airports
+UNWIND airports as aprt
+WITH DISTINCT aprt
+RETURN collect(aprt) AS airportsAvailableBelow3000
+
+16.
+MATCH p=(laxAirport:Airport {name: "LAX"})-[:CONNECT*..3]->(dayAirport:Airport {name: "DAY"}) 
+WITH  p, extract(e IN relationships(p) | e.ticketId ) AS ticketIds
+MATCH(ticket:Ticket)
+WHERE id(ticket) IN ticketIds
+AND ALL (x IN nodes(p) WHERE size(filter(z IN nodes(p) WHERE z = x)) = 1)
+WITH  p, reduce(total = 0, pr in extract(t in collect(ticket) | t.price) | total + pr) AS totalCost ORDER BY totalCost
+RETURN p, totalCost
+
+17.
+MATCH p=(laxAirport:Airport {name: "LAX"})-[:CONNECT*..3]->(dayAirport:Airport {name: "DAY"}) 
+WITH  p, extract(e IN relationships(p) | e.ticketId ) AS ticketIds
+MATCH(ticket:Ticket)
+WHERE id(ticket) IN ticketIds
+AND ALL (x IN nodes(p) WHERE size(filter(z IN nodes(p) WHERE z = x)) = 1)
+WITH  p, reduce(total = 0, pr in extract(t in collect(ticket) | t.price) | total + pr) AS totalCost ORDER BY totalCost LIMIT 1
+RETURN p, totalCost
+
+18.
+MATCH(t:Ticket {class:"business"}) WITH collect(id(t)) AS businesTicketIds 
+MATCH p=(laxAirport:Airport {name: "LAX"})-[:CONNECT*..3]->(dayAirport:Airport {name: "DAY"}) 
+WHERE ALL (e in relationships(p) WHERE e.ticketId in businesTicketIds)
+WITH  p, extract(rel in relationships(p) | rel.ticketId) AS usedBusinessTicketIds
+WHERE ALL (x IN nodes(p) WHERE size(filter(z IN nodes(p) WHERE z = x)) = 1)
+MATCH(usedTicket:Ticket) WHERE id(usedTicket) in usedBusinessTicketIds
+WITH p, reduce(total=0, ticket in collect(usedTicket) | total + ticket.price) as totalCost ORDER BY totalCost LIMIT 1
+RETURN p, totalCost
+
+19.
+MATCH p=(startAirport:Airport)-[:CONNECT*..3]->(endAirport:Airport) 
+WITH p, extract(e IN relationships(p) | e.flightId ) AS flightIds
+MATCH(flight:Flight)
+WHERE id(flight) IN flightIds AND ALL (x IN nodes(p) WHERE size(filter(z IN nodes(p) WHERE z = x)) = 1) 
+WITH flight.airline as airline,p,tail(nodes(p)) as airports
+UNWIND airports as aprt
+WITH DISTINCT aprt, airline
+RETURN airline,count(distinct aprt) ORDER BY count(distinct aprt) DESC
+
+20.
+MATCH p=(startAirport:Airport)-[:CONNECT]->(transferAirport:Airport)-[:CONNECT]->(endAirport:Airport)
+WITH  p, extract(e IN relationships(p) | e.ticketId ) AS ticketIds
+MATCH(ticket:Ticket)
+WHERE id(ticket) IN ticketIds
+AND ALL (x IN nodes(p) WHERE size(filter(z IN nodes(p) WHERE z = x)) = 1)
+WITH  p, reduce(total = 0, pr in extract(t in collect(ticket) | t.price) | total + pr) AS totalCost ORDER BY totalCost LIMIT 1
+RETURN p, totalCost
+
+
+
+
+
+
+
+
+    
+
+

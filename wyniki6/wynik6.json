@@ -1,0 +1,194 @@
+[
+  {
+    "keys": [
+      "keanuReeves",
+      "movieWithHugoWeavingAndKeanuReeves",
+      "hugoWeaving"
+    ],
+    "length": 3,
+    "_fields": [
+      {
+        "identity": {
+          "low": 1,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Keanu Reeves",
+          "born": {
+            "low": 1964,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 10,
+          "high": 0
+        },
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "title": "The Matrix Revolutions",
+          "tagline": "Everything that has a beginning has an end",
+          "released": {
+            "low": 2003,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 4,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Hugo Weaving",
+          "born": {
+            "low": 1960,
+            "high": 0
+          }
+        }
+      }
+    ],
+    "_fieldLookup": {
+      "keanuReeves": 0,
+      "movieWithHugoWeavingAndKeanuReeves": 1,
+      "hugoWeaving": 2
+    }
+  },
+  {
+    "keys": [
+      "keanuReeves",
+      "movieWithHugoWeavingAndKeanuReeves",
+      "hugoWeaving"
+    ],
+    "length": 3,
+    "_fields": [
+      {
+        "identity": {
+          "low": 1,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Keanu Reeves",
+          "born": {
+            "low": 1964,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 9,
+          "high": 0
+        },
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "title": "The Matrix Reloaded",
+          "tagline": "Free your mind",
+          "released": {
+            "low": 2003,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 4,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Hugo Weaving",
+          "born": {
+            "low": 1960,
+            "high": 0
+          }
+        }
+      }
+    ],
+    "_fieldLookup": {
+      "keanuReeves": 0,
+      "movieWithHugoWeavingAndKeanuReeves": 1,
+      "hugoWeaving": 2
+    }
+  },
+  {
+    "keys": [
+      "keanuReeves",
+      "movieWithHugoWeavingAndKeanuReeves",
+      "hugoWeaving"
+    ],
+    "length": 3,
+    "_fields": [
+      {
+        "identity": {
+          "low": 1,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Keanu Reeves",
+          "born": {
+            "low": 1964,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 0,
+          "high": 0
+        },
+        "labels": [
+          "Movie"
+        ],
+        "properties": {
+          "title": "The Matrix",
+          "tagline": "Welcome to the Real World",
+          "released": {
+            "low": 1999,
+            "high": 0
+          }
+        }
+      },
+      {
+        "identity": {
+          "low": 4,
+          "high": 0
+        },
+        "labels": [
+          "Person"
+        ],
+        "properties": {
+          "name": "Hugo Weaving",
+          "born": {
+            "low": 1960,
+            "high": 0
+          }
+        }
+      }
+    ],
+    "_fieldLookup": {
+      "keanuReeves": 0,
+      "movieWithHugoWeavingAndKeanuReeves": 1,
+      "hugoWeaving": 2
+    }
+  }
+]
